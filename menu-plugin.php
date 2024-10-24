@@ -1,9 +1,13 @@
 <?php
 /*
 Plugin Name: Menu Ícon RFF
+Plugin URI: http://exemplo.com
 Description: Plugin para adicionar um menu com 3 níveis.
-Version: 1.0
-Author: Seu Nome
+Version: 2.0
+Author: Robson Ferreira de Farias
+Email: robsonfdfarias@gmail.com
+Author URI: http://infocomrobson.com.br
+License: GPL2
 */
 
 
@@ -13,12 +17,13 @@ define('MICON_RFF_URL_JS', plugins_url('js/', __FILE__));
 define('MICON_RFF_TABLE_CATEG', 'micon_rff_categ');
 define('MICON_RFF_TABLE_ITEMS', 'micon_rff_items');
 
-
-if(file_exists(plugin_dir_path(__FILE__).'micon_rff_core.php')){
-    require_once(plugin_dir_path(__FILE__).'micon_rff_core.php');
-}
 if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_class_icons.php')){
     require_once(plugin_dir_path(__FILE__).'inc/micon_rff_class_icons.php');
+}
+if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_hooks.php')){
+    require_once(plugin_dir_path(__FILE__).'inc/micon_rff_hooks.php');
+    register_activation_hook(__FILE__, 'micon_rff_install');
+    register_deactivation_hook(__FILE__, 'micon_rff_uninstall');
 }
 if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_graphql.php')){
     require_once(plugin_dir_path(__FILE__).'inc/micon_rff_graphql.php');
@@ -26,6 +31,10 @@ if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_graphql.php')){
     add_action('graphql_register_types', 'gmp_register_graphql_connection_types');
 }
 
+
+if(file_exists(plugin_dir_path(__FILE__).'micon-rff-core.php')){
+    require_once(plugin_dir_path(__FILE__).'micon-rff-core.php');
+}
 
  // Adiciona o CSS e JS
  function micon_rff_adicionar_scripts() {

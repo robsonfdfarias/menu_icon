@@ -1,28 +1,33 @@
 <?php
 
 /*
-core
+* Núcleo do plugin
 */
+
+//se chamar diretamente e não pelo wordpress, aborta
+if(!defined('WPINC')){
+    die();
+ }
 
 if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_class_icons.php')){
     require_once(plugin_dir_path(__FILE__).'inc/micon_rff_class_icons.php');
 }
 
 
-function gmp_add_admin_menu() {
+add_action('admin_menu', 'micon_rff_admin_menu');
+function micon_rff_admin_menu() {
     add_menu_page(
-        'MenuIconRff',
-        'MenuIconRff',
-        'manage_options',
-        'graphql-menu',
-        'gmp_menu_page',
-        'dashicons-menu',
-        6
+        'Menu Icon RFF', //Título da página
+        'Menu Icon RFF', //Título do menu
+        'manage_options', //nível de permissão
+        'Menu-icon-rff', //Slug
+        'micon_rff_admin_page', //Função chamada
+        'dashicons-menu', //Ícone https://developer.wordpress.org/resource/dashicons/#admin-generic
+        5 //Posição no menu
     );
 }
-add_action('admin_menu', 'gmp_add_admin_menu');
 
-function gmp_menu_page() {
+function micon_rff_admin_page() {
     ?>
     <div class="wrap">
         <h1>Gerenciar MenuIconRff</h1>

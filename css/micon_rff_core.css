@@ -1,3 +1,177 @@
 .micon_rff_div_icons{
     cursor: pointer;
 }
+
+.n {
+    display: inline-flex;
+    list-style-type: none; /* Remove a numeração */
+    padding-left: 0; /* Remove o recuo padrão, se necessário */
+}
+.n li{
+    position: relative;
+    min-width: 150px;
+    padding: 5px 10px;
+    background-color: aquamarine;
+    /* margin-right: 5px; */
+    margin: 0;
+    border-bottom: 1px solid #cdcdcd;
+}
+.n li:hover{
+    background-color: rgb(114, 136, 129);
+}
+.n li a{
+    text-decoration: none;
+}
+.n li .nn{
+    display: none;
+}
+.n li:hover .nn{
+    display: block;
+}
+
+
+
+
+.nn {
+    position: absolute;
+    top: 100%; /* Aparece logo abaixo do menu pai */
+    left: 0;
+    /* background-color: #333; */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: fit-content; /* Largura mínima do submenu */
+    list-style-type: none; /* Remove a numeração */
+    padding-left: 0; /* Remove o recuo padrão, se necessário */
+}
+.nn li{
+    position: relative;
+    min-width: 150px;
+    /* padding: 5px 10px; */
+    background-color: aquamarine;
+    margin-right: 5px;
+}
+.nn li:hover {
+    background-color: rgb(114, 136, 129);
+}
+.nn li a{
+    text-decoration: none;
+}
+/* .nn li .nnnn{
+    display: none;
+} */
+.nn li:hover .nnnn{
+    display: block;
+}
+
+
+.nnnn {
+    display: none;
+    position: absolute;
+    top: 0; /* Aparece logo abaixo do menu pai */
+    left: 100%;
+    min-width: 150px;
+    /* background-color: #333; */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: fit-content; /* Largura mínima do submenu */
+    list-style-type: none; /* Remove a numeração */
+    padding-left: 0; /* Remove o recuo padrão, se necessário */
+}
+.nnnn li{
+    position: relative;
+    width: fit-content;
+    /* padding: 5px 10px; */
+    background-color: aquamarine;
+    margin-right: 5px;
+}
+.nnnn li:hover {
+    background-color: rgb(114, 136, 129);
+}
+.nnnn li a{
+    text-decoration: none;
+}
+.nnnn li .nnnnnnnn{
+    display: none;
+}
+
+
+
+
+.nnnnnnnn {
+    display: none;
+    position: absolute;
+    top: 0; /* Aparece logo abaixo do menu pai */
+    left: 100%;
+    min-width: 150px;
+    /* background-color: #333; */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: fit-content; /* Largura mínima do submenu */
+    list-style-type: none; /* Remove a numeração */
+    padding-left: 0; /* Remove o recuo padrão, se necessário */
+}
+.nnnnnnnn li{
+    position: relative;
+    width: fit-content;
+    /* padding: 5px 10px; */
+    background-color: aquamarine;
+    margin-right: 5px;
+}
+.nnnnnnnn li:hover {
+    background-color: rgb(114, 136, 129);
+}
+.nnnnnnnn li a{
+    text-decoration: none;
+}
+.nnnnnnnn li .nnnnnnnnnnnnnnnn{
+    display: none;
+}
+
+
+/* .nn li {
+    position: relative;
+    width: fit-content;
+    padding: 5px 10px;
+    background-color: aquamarine;
+    margin-right: 5px;
+}
+
+
+.nnnn1 {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: 100px;
+} */
+
+
+/* .nn li ul li{
+    text-decoration: none;
+    background-color: bisque;
+    position: relative;
+    width: fit-content;
+    padding: 5px 10px;
+    background-color: aquamarine;
+    margin-right: 5px;
+}
+.nn li ul li ul{
+    display: none;
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    background-color: #333;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: fit-content; 
+}
+.nn li ul li:hover ul{
+    display: block;
+} */

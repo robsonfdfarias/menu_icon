@@ -33,77 +33,53 @@ function micon_rff_admin_menu() {
 function micon_rff_admin_page() {
     $db = new MIconRffDB();
     ?>
+    <div id="miconRffForm" style="position: absolute; background-color:#fff; padding:30px; z-index:999; display:none; width:90%;height:90vh;">
+            <form method="post" action="">
+                <input type="hidden" name="gmp_action" value="add_menu_icon_rff">
+                <p><label for="menu_icon_rff_title">Título:</label><input type="text" id="menu_icon_rff_title" name="menu_icon_rff_title" style="width:100%;" required></p>
+                <p><label for="menu_icon_rff_url">URL:</label><input type="text" id="menu_icon_rff_url" name="menu_icon_rff_url" style="width:100%;" required></p>
+                <p><label for="menu_icon_rff_parent">Escolha o Pai: (Se deixar em branco, ele será o pai)</label>
+                <select id="menu_icon_rff_parent" name="menu_icon_rff_parent" style="width:100%;">
+                    <option value="0">Nenhum</option>
+                    <?php gmp_list_menu_icon_rff_options($db); ?>
+                </select></p>
+                <p>
+                    <input type="submit" value="Adicionar">
+                    <button onclick="cancelar()">Cancelar</button>
+                </p>
+            </form>
+        </div>
     <div class="wrap">
         <h1>Gerenciar MenuIconRff</h1>
+        <button onclick="newButton()">Inserir novo</button>
         <span id="ex"></span>
-        <form method="post" action="options.php">
-            <?php
-            settings_fields('gmp_menu_icon_rff_options');
-            do_settings_sections('graphql-menu');
-            submit_button();
-            ?>
-        </form>
         <h2>Adicionar Novo MenuIconRff</h2>
-        <form method="post" action="">
-            <input type="hidden" name="gmp_action" value="add_menu_icon_rff">
-            <p><label for="menu_icon_rff_title">Título:</label><input type="text" id="menu_icon_rff_title" name="menu_icon_rff_title" required></p>
-            <p><label for="menu_icon_rff_url">URL:</label><input type="text" id="menu_icon_rff_url" name="menu_icon_rff_url" required></p>
-            <p><label for="menu_icon_rff_parent">MenuIconRff Pai:</label>
-            <select id="menu_icon_rff_parent" name="menu_icon_rff_parent">
-                <option value="0">Nenhum</option>
-                <?php gmp_list_menu_icon_rff_options(); ?>
-            </select></p>
-            <p><input type="submit" value="Adicionar MenuIconRff"></p>
-        </form>
+        <div id="iconsRff" style="position: absolute; background-color:#fff; padding:10px; z-index:1000; display:none;">
+            <?php
+                $icones = new MIconsRffIcons();
+                $icones->mostrar_dashicons();
+            ?>
+        </div>
+        
         <?php
+        $val = $db->getAllItemsArrayAdminPage();
         $val = $db->getAllItemsArray();
-            $icones = new MIconsRffIcons();
-            $icones->mostrar_dashicons();
         ?>
+        <script>
+            function cancelar(){
+                document.getElementById('miconRffForm').style.display='none';
+            }
+            function newButton(){
+                document.getElementById('miconRffForm').style.display='block';
+            }
+        </script>
     </div>
     <?php
 }
 
-function gmp_list_menu_icon_rff_options() {
-    $menuIconRffs = get_option('gmp_menu_icon_rff', []);
-    foreach ($menuIconRffs as $menuIconRff) {
-        echo '<option value="' . esc_attr($menuIconRff['id']) . '">' . esc_html($menuIconRff['title']) . '</option>';
+function gmp_list_menu_icon_rff_options($db) {
+    $listMenu = $db->getAllItemsForSelectTag();
+    foreach($listMenu as $menu){
+        echo '<option value="' . esc_attr($menu['id']) . '">' . esc_html($menu['title']) . '</option>';
     }
 }
-
-function gmp_handle_menu_icon_rff_submission() {
-    if (isset($_POST['gmp_action']) && $_POST['gmp_action'] === 'add_menu_icon_rff') {
-        $title = sanitize_text_field($_POST['menu_icon_rff_title']);
-        $url = esc_url_raw($_POST['menu_icon_rff_url']);
-        $parent = intval($_POST['menu_icon_rff_parent']);
-
-        $menuIconRffs = get_option('gmp_menu_icon_rff', []);
-        $id = count($menuIconRffs) + 1;
-
-        $menuIconRffs[] = [
-            'id' => $id,
-            'title' => $title,
-            'url' => $url,
-            'parent' => $parent,
-            'children' => []
-        ];
-
-        foreach ($menuIconRffs as &$menuIconRff) {
-            if ($menuIconRff['parent'] == $id) {
-                $menuIconRff['children'][] = [
-                    'id' => $id,
-                    'title' => $title,
-                    'url' => $url,
-                    'parent' => $parent,
-                    'children' => []
-                ];
-            }
-        }
-
-        update_option('gmp_menu_icon_rff', $menuIconRffs);
-        wp_redirect(add_query_arg('page', 'graphql-menu', admin_url('admin.php')));
-        exit;
-    }
-}
-add_action('admin_init', 'gmp_handle_menu_icon_rff_submission');
-

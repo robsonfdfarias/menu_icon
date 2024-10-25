@@ -12,6 +12,9 @@ if(!defined('WPINC')){
 if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_class_icons.php')){
     require_once(plugin_dir_path(__FILE__).'inc/micon_rff_class_icons.php');
 }
+if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_class_db.php')){
+    require_once(plugin_dir_path(__FILE__).'inc/micon_rff_class_db.php');
+}
 
 
 add_action('admin_menu', 'micon_rff_admin_menu');
@@ -28,6 +31,7 @@ function micon_rff_admin_menu() {
 }
 
 function micon_rff_admin_page() {
+    $db = new MIconRffDB();
     ?>
     <div class="wrap">
         <h1>Gerenciar MenuIconRff</h1>
@@ -52,6 +56,7 @@ function micon_rff_admin_page() {
             <p><input type="submit" value="Adicionar MenuIconRff"></p>
         </form>
         <?php
+        $val = $db->getAllItemsArray();
             $icones = new MIconsRffIcons();
             $icones->mostrar_dashicons();
         ?>

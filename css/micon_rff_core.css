@@ -2,6 +2,11 @@
     cursor: pointer;
 }
 
+.miconsRffUlLiAll a {
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+}
+
 .n {
     display: inline-flex;
     list-style-type: none; /* Remove a numeração */
@@ -95,7 +100,9 @@
 .nnnn li .nnnnnnnn{
     display: none;
 }
-
+.nnnn li:hover .nnnnnnnn{
+    display: block;
+}
 
 
 
@@ -131,47 +138,20 @@
 }
 
 
-/* .nn li {
-    position: relative;
-    width: fit-content;
+
+#btCloseRffIcons {
     padding: 5px 10px;
-    background-color: aquamarine;
-    margin-right: 5px;
-}
-
-
-.nnnn1 {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    min-width: 100px;
-} */
-
-
-/* .nn li ul li{
-    text-decoration: none;
-    background-color: bisque;
-    position: relative;
+    background-color: red;
+    color: white;
     width: fit-content;
-    padding: 5px 10px;
-    background-color: aquamarine;
-    margin-right: 5px;
+    cursor: pointer;
+    float: right;
+    border-radius: 4px;
+    transition: all ease-in-out 0.3s;
 }
-.nn li ul li ul{
-    display: none;
-    position: absolute;
-    top: 100%; 
-    left: 0;
-    background-color: #333;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: fit-content; 
+
+#btCloseRffIcons:hover{
+    background-color: rgb(250, 93, 93);
+    color: black;
+    transition: all ease-in-out 0.3s;
 }
-.nn li ul li:hover ul{
-    display: block;
-} */

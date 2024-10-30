@@ -38,7 +38,7 @@ class MIconRffDB{
 
         foreach ($all_items as $item) {
             // Pega apenas os itens pais
-            if($item->parentId==null){
+            if($item->parentId==null || $item->parentId==0){
                 $item_map[$item->id] = $item;
                 $item_map[$item->id]->children = $this->getFather($item, []); // pega os itens filhos
             }
@@ -55,7 +55,7 @@ class MIconRffDB{
         foreach ($items as $item) {
             // Imprime o título do item
             if(!empty($item->title)){
-                echo '<li>'.$m.' <a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a>';
+                echo '<li>'.$m.' <span class="'.$item->iconClass.'" style="font-size: 17px; padding-right: 5px;" title="'.$item->title.'"></span> <a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a>';
                 // Verifica se há filhos e chama a função recursivamente
                         $marc++;
                 if (!empty($item->children)) {
@@ -80,7 +80,7 @@ class MIconRffDB{
                 echo '<div style="width:fit-content; background-color:#fff; padding:20px; border:1px solid #cdcdcd; margin-right:10px;">';
                     echo '<span style="font-size:1.5rem;">'.htmlspecialchars($item->title).'</span>';
                     echo '<ul>';
-                        echo '<li>-<a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a>';
+                        echo '<li>- <span class="'.$item->iconClass.'" style="font-size: 17px; padding-right: 5px;" title="'.$item->title.'"></span><a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a>';
                         if (!empty($item->children)) {
                             echo '<ul>';
                             for($r=0;$r<count($item->children); $r++){
@@ -105,10 +105,10 @@ class MIconRffDB{
         foreach ($items as $item) {
             // Imprime o título do item
             if(!empty($item->title)){
-                echo '<li><a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a>';
+                echo '<li><span class="'.$item->iconClass.'" style="font-size: 20px; padding-right: 5px;"></span><a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a>';
                 // Verifica se há filhos e chama a função recursivamente
                 if (!empty($item->children)) {
-                    echo '<ul class="'.$class.$class.'">';
+                    echo '<ul class="miconsRffUlLiAll '.$class.$class.'">';
                     for($r=0;$r<count($item->children); $r++){
                         $this->printMenu2($item->children[$r], $class.$class);
                     }
@@ -122,7 +122,7 @@ class MIconRffDB{
 
     function getAllItemsArray(){
         $item_map=$this->generateArrayAllItems();
-        echo '<ul class="n">';
+        echo '<ul class="miconsRffUlLiAll n">';
         $this->printMenu2($item_map, 'n');
         echo '</ul>';
     }
@@ -130,5 +130,99 @@ class MIconRffDB{
     function getAllItemsForSelectTag(){
         $all_items = $this->db->get_results("SELECT * FROM {$this->tableItens}", ARRAY_A);
         return $all_items;
+    }
+
+    function getAllCategoryForSelectTag(){
+        $all_categ = $this->db->get_results("SELECT * FROM {$this->tableCat}", ARRAY_A);
+        return $all_categ;
+    }
+
+    function getItemForId($id){
+        $item = $this->db->get_results("SELECT * FROM {$this->tableItens} WHERE id={$id}");
+        return $item;
+    }
+
+    function insertIconRff(){
+        if(isset($_POST['insertMenuRff'])){
+            if(isset($_POST['menu_icon_rff_title']) && 
+            isset($_POST['menu_icon_rff_url']) && 
+            isset($_POST['menu_icon_rff_parent']) && 
+            isset($_POST['menu_icon_rff_orderItems']) && 
+            isset($_POST['menu_icon_rff_status']) && 
+            isset($_POST['menu_icon_rff_cat']) && 
+            isset($_POST['fieldIconRff'])){
+                //aplica o sanitize_text_field
+                $miconrffTitle = sanitize_text_field($_POST['menu_icon_rff_title']);
+                $miconrffUrl = sanitize_text_field($_POST['menu_icon_rff_url']);
+                $miconrffParent = sanitize_text_field($_POST['menu_icon_rff_parent']);
+                $miconrffIcon = sanitize_text_field($_POST['fieldIconRff']);
+                $miconrffOrderItems = sanitize_text_field($_POST['menu_icon_rff_orderItems']);
+                $miconrffStatus = sanitize_text_field($_POST['menu_icon_rff_status']);
+                $miconrffCat = sanitize_text_field($_POST['menu_icon_rff_cat']);
+                $result = $this->db->insert(
+                    $this->tableItens,
+                    array(
+                        'title' => $miconrffTitle,
+                        'urlPage' => $miconrffUrl,
+                        'category' => $miconrffCat,
+                        'statusItem' => $miconrffStatus,
+                        'iconClass' => $miconrffIcon,
+                        'orderItems' => $miconrffOrderItems,
+                        'parentId' => $miconrffParent,
+                    )
+                );
+                if($result<=0 || $result==false){
+                    echo '<div class="notice notice-failure is-dismissible"><p>Não foi possível inserir o item de menu. Erro: '.$this->db->last_error.'</p></div>';
+                }else{
+                    echo '<div class="notice notice-success is-dismissible"><p>Item de menu <strong>inserido</strong> com sucesso!</p></div>';
+                }
+            }
+        }else{
+            // echo 'NEUTRO....---'.$n;
+        }
+    }
+
+    function updateIconRff(){
+        if(isset($_POST['updateMenuRff'])){
+            if(isset($_POST['menu_icon_rff_id']) && isset($_POST['menu_icon_rff_title']) && 
+            isset($_POST['menu_icon_rff_url']) && 
+            isset($_POST['menu_icon_rff_parent']) && 
+            isset($_POST['menu_icon_rff_orderItems']) && 
+            isset($_POST['menu_icon_rff_status']) && 
+            isset($_POST['menu_icon_rff_cat']) && 
+            isset($_POST['fieldIconRff'])){
+                //aplica o sanitize_text_field
+                $id=$_POST['menu_icon_rff_id'];
+                $miconrffTitle = sanitize_text_field($_POST['menu_icon_rff_title']);
+                $miconrffUrl = sanitize_text_field($_POST['menu_icon_rff_url']);
+                $miconrffParent = sanitize_text_field($_POST['menu_icon_rff_parent']);
+                $miconrffIcon = sanitize_text_field($_POST['fieldIconRff']);
+                $miconrffOrderItems = sanitize_text_field($_POST['menu_icon_rff_orderItems']);
+                $miconrffStatus = sanitize_text_field($_POST['menu_icon_rff_status']);
+                $miconrffCat = sanitize_text_field($_POST['menu_icon_rff_cat']);
+                $this->db->update(
+                    $this->tableItens,
+                    array(
+                        'title' => $miconrffTitle,
+                        'urlPage' => $miconrffUrl,
+                        'category' => $miconrffCat,
+                        'statusItem' => $miconrffStatus,
+                        'iconClass' => $miconrffIcon,
+                        'orderItems' => $miconrffOrderItems,
+                        'parentId' => $miconrffParent,
+                    ),
+                    array('id'=>$id),
+                    array('%s'),
+                    array('%d'),
+                );
+                if($result<=0 || $result==false){
+                    echo '<div class="notice notice-failure is-dismissible"><p>Não foi possível editar o item de menu. Erro: '.$this->db->last_error.'</p></div>';
+                }else{
+                    echo '<div class="notice notice-success is-dismissible"><p>Item de menu <strong>atualizada</strong> com sucesso!</p></div>';
+                }
+            }
+        }else{
+            // echo 'NEUTRO....---'.$n;
+        }
     }
 }

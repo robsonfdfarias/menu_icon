@@ -15,6 +15,9 @@ if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_class_icons.php')){
 if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_class_db.php')){
     require_once(plugin_dir_path(__FILE__).'inc/micon_rff_class_db.php');
 }
+if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_class_admin_categ.php')){
+    require_once(plugin_dir_path(__FILE__).'inc/micon_rff_class_admin_categ.php');
+}
 
 
 add_action('admin_menu', 'micon_rff_admin_menu');
@@ -31,8 +34,12 @@ function micon_rff_admin_menu() {
 }
 
 function micon_rff_admin_page() {
+    $adminCateg = new MIconRffCateg();
+    $adminCateg->openDivAdminCat();
     $db = new MIconRffDB();
     $db->insertIconRff();
+    $db->updateIconRff();
+    $db->deleteIconRff();
     if(isset($_GET['id'])){
         $itemForId = $db->getItemForId($_GET['id'])[0];
         $jsonItemForId = '{
@@ -46,6 +53,28 @@ function micon_rff_admin_page() {
             "parentId":'.$itemForId->parentId.'
         }';
         echo '<div style="display:none;" id="contentMenuForId">'.$jsonItemForId.'</div>';
+        $cat = $db->getCatById($itemForId->category);
+        $jsonCat = '{
+            "id": '.$cat->id.',
+            "title": "'.$cat->title.'",
+            "statusItem": "'.$cat->statusItem.'"
+        }';
+        echo '<div style="display:none;" id="contentCatForId">'.$jsonCat.'</div>';
+        $jsonParentId='{"title":"Nenhum"}';
+        if(!empty($itemForId->parentId)){
+            $parentId = $db->getItemForId($itemForId->parentId)[0];
+            $jsonParentId = '{
+                "id": '.$parentId->id.',
+                "title": "'.$parentId->title.'",
+                "urlPage": "'.$parentId->urlPage.'",
+                "category": '.$parentId->category.',
+                "statusItem": "'.$parentId->statusItem.'",
+                "iconClass": "'.$parentId->iconClass.'",
+                "orderItems": '.$parentId->orderItems.',
+                "parentId": '.$parentId->parentId.'
+            }';
+        }
+        echo '<div style="display:none;" id="contentParentIdForId">'.$jsonParentId.'</div>';
         // echo 'ID selecionado: '.$_GET['id'];
     }
     ?>
@@ -69,7 +98,7 @@ function micon_rff_admin_page() {
                         <option value="Inativo">Inativo</option>
                     </select>
                 </span>
-                <input type="hidden" name="micons_rff_id" id="micons_rff_id">
+                <input type="hidden" name="menu_icon_rff_id" id="micons_rff_id">
                 <p>
                     <label for="menu_icon_rff_title">Título:</label>
                     <input type="text" id="menu_icon_rff_title" name="menu_icon_rff_title" style="width:100%;" required>
@@ -98,7 +127,18 @@ function micon_rff_admin_page() {
                     <button type="submit" onclick="event.preventDefault(), btSelectIconRff()">Selecionar</button>
                 </p>
                     <!-- <input type="submit" name="insertMenuRff" id="insertMenuRff" value="Adicionar"> -->
-                    <button type="submit" name="insertMenuRff">Cadastrar</button>
+                    <button type="submit" name="insertMenuRff" id="insertMenuRff">Cadastrar</button>
+                    <button type="submit" name="updateMenuRff" id="updateMenuRff">Atualizar</button>
+                    <button type="submit" name="openDelMenuRff" id="openDelMenuRff" style="background-color:red;">Deletar</button>
+                    <div id="divDelItemRff" style="position:absolute;display:none;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.3);padding-top:30px;">
+                        <div id="divDelItemRffInto" style="position:relative; max-width:400px; margin:auto auto; border: 1px solid #cdcdcd; padding:40px;background-color:white;">
+                            <div style="font-size:2rem;line-height:2rem;font-weight:bold;">
+                            Tem certeza que deseja excluir o item?
+                            </div>
+                            <button type="submit" name="deleteMenuRff" id="deleteMenuRff" style="background-color:red;">Deletar</button>
+                            <button type="submit" name="abortDeleteMenuRff" id="abortDeleteMenuRff">Cancelar</button>
+                        </div>
+                    </div>
                     <button onclick="cancelar()">Cancelar</button>
                 </p>
             </form>
@@ -106,11 +146,12 @@ function micon_rff_admin_page() {
     <div class="wrap">
         <h1>Gerenciar MenuIconRff</h1>
         <button onclick="newButton()">Inserir novo</button>
+        <button onclick="adminCateg()">Categorias</button>
         <h2>Adicionar Novo MenuIconRff</h2>
         
         <?php
-        $val = $db->getAllItemsArrayAdminPage();
-        $val = $db->getAllItemsArray();
+            $db->getAllItemsArrayAdminPage();
+            // $db->getAllItemsArray();
         ?>
         <script>
             function cancelar(){
@@ -119,6 +160,16 @@ function micon_rff_admin_page() {
             }
             function newButton(){
                 document.getElementById('miconRffForm').style.display='block';
+                let btCreate = document.getElementById('insertMenuRff');
+                btCreate.style.display = 'inline';
+                let btUpdate = document.getElementById('updateMenuRff');
+                btUpdate.style.display = 'none';
+                let btDelete = document.getElementById('openDelMenuRff');
+                btDelete.style.display = 'none';
+            }
+            function adminCateg(){
+                addParamsUrl('adminCat', true);
+                document.getElementById('divGeralAdminCat').style.display='block';
             }
         </script>
     </div>

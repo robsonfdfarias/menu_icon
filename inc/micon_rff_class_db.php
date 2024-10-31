@@ -1,21 +1,17 @@
 <?php
-global $wpdb;
-$tableCatMIconRff = $wpdb->prefix.MICON_RFF_TABLE_CATEG;
-$tableItensMIconRff = $wpdb->prefix.MICON_RFF_TABLE_ITEMS;
+
 class MIconRffDB{
     private $tableCat;
     private $tableItens;
     private $db;
     function __construct(){
-        global $tableCatMIconRff;
-        global $tableItensMIconRff;
         global $wpdb;
-        $this->tableCat = $tableCatMIconRff;
-        $this->tableItens = $tableItensMIconRff;
+        $this->tableCat = $wpdb->prefix.MICON_RFF_TABLE_CATEG;
+        $this->tableItens = $wpdb->prefix.MICON_RFF_TABLE_ITEMS;
         $this->db = $wpdb;
     }
     function getFather($item, $array){
-        global $tableItensMIconRff;
+        $tableItensMIconRff = $this->tableItens;
         global $wpdb;
         $re = $wpdb->get_results("SELECT * FROM {$tableItensMIconRff} WHERE parentId={$item->id}");
         for($i=0;$i<count($re); $i++){
@@ -55,7 +51,8 @@ class MIconRffDB{
         foreach ($items as $item) {
             // Imprime o título do item
             if(!empty($item->title)){
-                echo '<li>'.$m.' <span class="'.$item->iconClass.'" style="font-size: 17px; padding-right: 5px;" title="'.$item->title.'"></span> <a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a>';
+                echo '<li>'.$m.' <span class="'.$item->iconClass.'" style="font-size: 17px; padding-right: 5px;" title="'.$item->title
+                .'"></span> <a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a>';
                 // Verifica se há filhos e chama a função recursivamente
                         $marc++;
                 if (!empty($item->children)) {
@@ -74,10 +71,10 @@ class MIconRffDB{
     }
     function getAllItemsArrayAdminPage(){
         $item_map=$this->generateArrayAllItems();
-        echo '<div style="display:flex;">';
+        echo '<div style="display:flex;flex-wrap:wrap;justify-content:left; gap:10px;">';
         foreach($item_map as $item){
             if(!empty($item->title)){
-                echo '<div style="width:fit-content; background-color:#fff; padding:20px; border:1px solid #cdcdcd; margin-right:10px;">';
+                echo '<div style="width:fit-content; background-color:#fff; padding:20px; border:1px solid #cdcdcd;">';
                     echo '<span style="font-size:1.5rem;">'.htmlspecialchars($item->title).'</span>';
                     echo '<ul>';
                         echo '<li>- <span class="'.$item->iconClass.'" style="font-size: 17px; padding-right: 5px;" title="'.$item->title.'"></span><a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a>';
@@ -130,11 +127,6 @@ class MIconRffDB{
     function getAllItemsForSelectTag(){
         $all_items = $this->db->get_results("SELECT * FROM {$this->tableItens}", ARRAY_A);
         return $all_items;
-    }
-
-    function getAllCategoryForSelectTag(){
-        $all_categ = $this->db->get_results("SELECT * FROM {$this->tableCat}", ARRAY_A);
-        return $all_categ;
     }
 
     function getItemForId($id){
@@ -192,7 +184,7 @@ class MIconRffDB{
             isset($_POST['menu_icon_rff_cat']) && 
             isset($_POST['fieldIconRff'])){
                 //aplica o sanitize_text_field
-                $id=$_POST['menu_icon_rff_id'];
+                $id = sanitize_text_field($_POST['menu_icon_rff_id']);
                 $miconrffTitle = sanitize_text_field($_POST['menu_icon_rff_title']);
                 $miconrffUrl = sanitize_text_field($_POST['menu_icon_rff_url']);
                 $miconrffParent = sanitize_text_field($_POST['menu_icon_rff_parent']);
@@ -200,7 +192,7 @@ class MIconRffDB{
                 $miconrffOrderItems = sanitize_text_field($_POST['menu_icon_rff_orderItems']);
                 $miconrffStatus = sanitize_text_field($_POST['menu_icon_rff_status']);
                 $miconrffCat = sanitize_text_field($_POST['menu_icon_rff_cat']);
-                $this->db->update(
+                $result = $this->db->update(
                     $this->tableItens,
                     array(
                         'title' => $miconrffTitle,
@@ -218,11 +210,49 @@ class MIconRffDB{
                 if($result<=0 || $result==false){
                     echo '<div class="notice notice-failure is-dismissible"><p>Não foi possível editar o item de menu. Erro: '.$this->db->last_error.'</p></div>';
                 }else{
-                    echo '<div class="notice notice-success is-dismissible"><p>Item de menu <strong>atualizada</strong> com sucesso!</p></div>';
+                    echo '<div class="notice notice-success is-dismissible"><p>Item de menu <strong>atualizado</strong> com sucesso!</p></div>';
                 }
             }
         }else{
-            // echo 'NEUTRO....---'.$n;
+            // echo 'NEUTRO update....---';
         }
     }
+
+    function deleteIconRff(){
+        if(isset($_POST['deleteMenuRff'])){
+            if(isset($_POST['menu_icon_rff_id'])){
+                //aplica o sanitize_text_field
+                $id = sanitize_text_field($_POST['menu_icon_rff_id']);
+                $result = $this->db->delete(
+                    $this->tableItens,
+                    array('id'=>$id),
+                    array('%d'),
+                );
+                if($result<=0 || $result==false){
+                    echo '<div class="notice notice-failure is-dismissible"><p>Não foi possível excluir o item de menu. Erro: '.$this->db->last_error.'</p></div>';
+                }else{
+                    echo '<div class="notice notice-success is-dismissible"><p>Item de menu <strong>excluído</strong> com sucesso!</p></div>';
+                }
+            }
+        }else{
+            // echo 'NEUTRO excluir....---';
+        }
+    }
+
+
+/**
+ * Aqui começa as categorias-----------------------------------------------
+ */
+
+    function getAllCategoryForSelectTag(){
+        $all_categ = $this->db->get_results("SELECT * FROM {$this->tableCat}", ARRAY_A);
+        return $all_categ;
+    }
+
+    function getCatById($id){
+        $id = sanitize_text_field($id);
+        $cat = $this->db->get_results("SELECT * FROM {$this->tableCat} WHERE id={$id}");
+        return $cat[0];
+    }
+
 }

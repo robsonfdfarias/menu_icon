@@ -16,15 +16,33 @@ function closeDivIcons(){
 }
 
 document.getElementById('formRffIconsMenu').addEventListener('submit', function(event){
+    console.log(event)
+    console.log(event.submitter.name)
     if(document.getElementById('fieldIconRff').value==''){
         alert('O campo Ícone é obrigatório, selecione um ícone clicando no botão Selecionar.')
         event.preventDefault();
     }
+    if(event.submitter.name=="openDelMenuRff"){
+        document.getElementById('divDelItemRff').style.display = 'block';
+        console.log('Bloqueou com sucesso....')
+        event.preventDefault();
+    }
+    if(event.submitter.name=="abortDeleteMenuRff"){
+        document.getElementById('divDelItemRff').style.display = 'none';
+        event.preventDefault();
+    }
+    removeParamsUrl('id')
 });
 
 ifIdSelectedOpenEdit();
 
 function ifIdSelectedOpenEdit(){
+    let btCreate = document.getElementById('insertMenuRff');
+    btCreate.style.display = 'none';
+    let btUpdate = document.getElementById('updateMenuRff');
+    btUpdate.style.display = 'inline';
+    let btDelete = document.getElementById('deleteMenuRff');
+    btDelete.style.display = 'inline';
     let order = document.getElementById('menu_icon_rff_orderItems');
     let status = document.getElementById('menu_icon_rff_status');
     let title = document.getElementById('menu_icon_rff_title');
@@ -42,12 +60,35 @@ function ifIdSelectedOpenEdit(){
         json = json.trim().replace(/\s+/g, ' ');
         try{
             json = JSON.parse(json);
-            console.log(json)
-            console.log(json.id);
+            // console.log(json)
+            // console.log(json.id);
         }catch(error){
             console.error("Erro ao converter para JSON:", error);
             return;
         }
+        //
+        let jsonCat = document.getElementById('contentCatForId').innerHTML;
+        jsonCat = jsonCat.trim().replace(/\s+/g, ' ');
+        try{
+            jsonCat = JSON.parse(jsonCat);
+            // console.log(jsonCat)
+            // console.log(jsonCat.id);
+        }catch(error){
+            console.error("Erro ao converter para JSON:", error);
+            return;
+        }
+        //
+        let jsonParentId = document.getElementById('contentParentIdForId').innerHTML;
+        jsonParentId = jsonParentId.trim().replace(/\s+/g, ' ');
+        try{
+            jsonParentId = JSON.parse(jsonParentId);
+            // console.log(jsonParentId)
+            // console.log(jsonParentId.id);
+        }catch(error){
+            console.error("Erro ao converter para JSON:", error);
+            return;
+        }
+        //
         order.value = json.orderItems;
         title.value = json.title;
         url.value = json.urlPage;
@@ -63,23 +104,59 @@ function ifIdSelectedOpenEdit(){
         status.appendChild(optionStatus);
         let optionParent = document.createElement('option');
         optionParent.value = json.parentId;
-        optionParent.textContent = 'Atual -> '+json.parentId;
+        optionParent.textContent = 'Atual -> '+jsonParentId.title;
         optionParent.selected = true;
         parent.appendChild(optionParent);
         // parent.value = json.parentId;
         let optionCat = document.createElement('option');
         optionCat.value = json.category;
-        optionCat.textContent = 'Atual -> '+json.category;
+        optionCat.textContent = 'Atual -> '+jsonCat.title;
         optionCat.selected = true;
         category.appendChild(optionCat);
         // category.value = json.category;
     }else{
-        console.log('Não existe um id')
+        // console.log('Não existe um id')
     }
 }
 
 function removeParamsUrl(param){
     let url = new URL(window.location.href);
-    url.searchParams.delete(param);
+    if(url.searchParams.has(param)){
+        url.searchParams.delete(param);
+        window.history.replaceState({}, '', url);
+    }
+}
+
+function addParamsUrl(param, value){
+    let url = new URL(window.location.href);
+    if(url.searchParams.has(param)){
+        url.searchParams.delete(param);
+    }
+    url.searchParams.append(param, value);
     window.history.replaceState({}, '', url);
+}
+
+
+function closeDivAdminCateg(){
+    document.getElementById('divGeralAdminCat').style.display = 'none';
+}
+
+
+/**
+ * Aqui começa a administração da Categoria
+ */
+
+
+document.getElementById('formRffCatAdmin').addEventListener('submit', function(event){
+    console.log(event)
+    console.log(event.submitter.name)
+    if(event.submitter.name=="btCancelAdminCat"){
+        document.getElementById('divFormRffCatAdmin').style.display = 'none';
+        event.preventDefault();
+    }
+    removeParamsUrl('id')
+});
+
+function closeDivFormAdminCat(){
+    document.getElementById('divFormRffCatAdmin').style.display = 'none';
 }

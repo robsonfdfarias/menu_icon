@@ -26,9 +26,9 @@ class MIconRffDB{
         }
         return $array;
     }
-    function generateArrayAllItems(){
+    function generateArrayAllItems($where){
         // $all_items = $this->db->get_results("SELECT * FROM {$this->tableItens}", ARRAY_A);
-        $all_items = $this->db->get_results("SELECT * FROM {$this->tableItens}");
+        $all_items = $this->db->get_results("SELECT * FROM {$this->tableItens}$where");
 
         $ar = [];
         $unique_items = [];
@@ -72,7 +72,7 @@ class MIconRffDB{
         echo '</ul>';
     }
     function getAllItemsArrayAdminPage(){
-        $item_map=$this->generateArrayAllItems();
+        $item_map=$this->generateArrayAllItems('');
         echo '<div style="display:flex;flex-wrap:wrap;justify-content:left; gap:10px;">';
         foreach($item_map as $item){
             if(!empty($item->title)){
@@ -120,7 +120,7 @@ class MIconRffDB{
     // }
 
     // function getAllItemsArray(){
-    //     $item_map=$this->generateArrayAllItems();
+    //     $item_map=$this->generateArrayAllItems('');
     //     echo '<ul class="miconsRffUlLiAll n">';
     //     $this->printMenu2($item_map, 'n');
     //     echo '</ul>';
@@ -149,9 +149,9 @@ class MIconRffDB{
         // echo '</li>';
     }
 
-    function getAllItemsArray(){
+    function getAllItemsArray($idCat){
         $val = '';
-        $item_map=$this->generateArrayAllItems();
+        $item_map=$this->generateArrayAllItems(' WHERE category='.$idCat);
         $val .= '<ul class="miconsRffUlLiAll n">';
         $val .= $this->printMenu2($item_map, 'n');
         $val .= '</ul>';

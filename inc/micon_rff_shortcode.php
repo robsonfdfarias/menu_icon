@@ -20,7 +20,7 @@ function micon_rff_model1($atts){
     $atts = shortcode_atts(array(
         'idcat'=>1
     ), $atts);
-    $val = $mIconRffDb->getAllItemsArray();
+    $val = $mIconRffDb->getAllItemsArray($atts["idcat"]);
     $html = '<div style="position:absolute;width:100%;left:0;top:15px;font-size:0.8rem;">'.$val.'</div>';
     return $html;
 }

@@ -99,31 +99,66 @@ class MIconRffDB{
         // printMenu($item_map[1]->children[0]);
     }
 
+    // function printMenu2($items, $class) {
+    //     // echo '<li>';
+    //     foreach ($items as $item) {
+    //         // Imprime o título do item
+    //         if(!empty($item->title)){
+    //             echo '<li><span class="'.$item->iconClass.'" style="font-size: 20px; padding-right: 5px;"></span><a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a>';
+    //             // Verifica se há filhos e chama a função recursivamente
+    //             if (!empty($item->children)) {
+    //                 echo '<ul class="miconsRffUlLiAll '.$class.$class.'">';
+    //                 for($r=0;$r<count($item->children); $r++){
+    //                     $this->printMenu2($item->children[$r], $class.$class);
+    //                 }
+    //                 echo '</ul>';
+    //             }
+    //             echo '</li>';
+    //         }
+    //     }
+    //     // echo '</li>';
+    // }
+
+    // function getAllItemsArray(){
+    //     $item_map=$this->generateArrayAllItems();
+    //     echo '<ul class="miconsRffUlLiAll n">';
+    //     $this->printMenu2($item_map, 'n');
+    //     echo '</ul>';
+    // }
+
+
     function printMenu2($items, $class) {
         // echo '<li>';
+        $val = '';
         foreach ($items as $item) {
             // Imprime o título do item
             if(!empty($item->title)){
-                echo '<li><span class="'.$item->iconClass.'" style="font-size: 20px; padding-right: 5px;"></span><a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a>';
+                $val .= '<li><span class="'.$item->iconClass.'" style="font-size: 20px; padding-right: 5px;"></span><a href="'.$item->urlPage.'">' . htmlspecialchars($item->title).'</a>';
                 // Verifica se há filhos e chama a função recursivamente
                 if (!empty($item->children)) {
-                    echo '<ul class="miconsRffUlLiAll '.$class.$class.'">';
+                    $val .= '<ul class="miconsRffUlLiAll '.$class.$class.'">';
                     for($r=0;$r<count($item->children); $r++){
-                        $this->printMenu2($item->children[$r], $class.$class);
+                        $val .= $this->printMenu2($item->children[$r], $class.$class);
                     }
-                    echo '</ul>';
+                    $val .= '</ul>';
                 }
-                echo '</li>';
+                $val .= '</li>';
             }
         }
+        return $val;
         // echo '</li>';
     }
 
     function getAllItemsArray(){
+        $val = '';
         $item_map=$this->generateArrayAllItems();
-        echo '<ul class="miconsRffUlLiAll n">';
-        $this->printMenu2($item_map, 'n');
-        echo '</ul>';
+        $val .= '<ul class="miconsRffUlLiAll n">';
+        $val .= $this->printMenu2($item_map, 'n');
+        $val .= '</ul>';
+        return $val;
+    }
+    function getAllItemsArray2(){
+        return 'Olá.......';
     }
 
     function getAllItemsForSelectTag(){

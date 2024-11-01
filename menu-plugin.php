@@ -30,6 +30,9 @@ if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_graphql.php')){
     add_action('graphql_register_types', 'gmp_register_graphql_menu');
     add_action('graphql_register_types', 'gmp_register_graphql_connection_types');
 }
+if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_shortcode.php')){
+    require_once(plugin_dir_path(__FILE__).'inc/micon_rff_shortcode.php');
+}
 
 
 if(file_exists(plugin_dir_path(__FILE__).'micon-rff-core.php')){
@@ -43,6 +46,7 @@ if(file_exists(plugin_dir_path(__FILE__).'micon-rff-core.php')){
 }
   
   add_action('admin_enqueue_scripts', 'micon_rff_adicionar_scripts');
+  add_action('wp_enqueue_scripts', 'micon_rff_adicionar_scripts');
 
 
 

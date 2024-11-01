@@ -173,20 +173,46 @@ document.getElementById('formRffCatAdmin').addEventListener('submit', function(e
         document.getElementById('divFormRffCatAdmin').style.display = 'none';
         event.preventDefault();
     }
+    if(event.submitter.name=="abortDeleteCatRff"){
+        document.getElementById('divDelCatRff').style.display = 'none';
+        event.preventDefault();
+    }
+    if(event.submitter.name=="btOpenDelAdminCat"){
+        document.getElementById('divDelCatRff').style.display = 'block';
+        event.preventDefault();
+    }
     removeParamsUrl('id')
+    removeParamsUrl('idCat')
 });
+
+function clearFormCat(){
+    document.getElementById('micon_rff_admin_cat_title').value='';
+    let status = document.getElementById('micon_rff_admin_cat_status');
+    if(status.options[(status.options.length-1)].text.startsWith('Atual -> ')){
+        status.remove(status.options.length-1);
+    }
+}
 
 function closeDivFormAdminCat(){
     removeParamsUrl('idCat');
+    clearFormCat();
     document.getElementById('divFormRffCatAdmin').style.display = 'none';
 }
 
 function newCategory(){
+    clearFormCat();
     document.getElementById('divFormRffCatAdmin').style.display='block';
+    document.getElementById('btCadAdminCat').style.display='inline';
+    document.getElementById('btEditAdminCat').style.display='none';
+    document.getElementById('btOpenDelAdminCat').style.display='none';
 }
 
 function openEditCateg(){
     if(findParam('idCat')){
+        document.getElementById('btCadAdminCat').style.display='none';
+        document.getElementById('btEditAdminCat').style.display='inline';
+        document.getElementById('btOpenDelAdminCat').style.display='inline';
+        let id = document.getElementById('micon_rff_admin_cat_id');
         let title = document.getElementById('micon_rff_admin_cat_title');
         let status = document.getElementById('micon_rff_admin_cat_status');
         let divJson = document.getElementById('catForID').innerHTML;
@@ -197,6 +223,7 @@ function openEditCateg(){
         }catch(error){
             console.log('Ocorreu o seguinte erro: '+error);
         }
+        id.value = json.id;
         title.value = json.title;
         let option = document.createElement('option');
         option.value = json.statusItem;

@@ -38,6 +38,7 @@ function micon_rff_admin_menu() {
 
 function micon_rff_admin_page() {
     $adminCateg = new MIconRffCateg();
+    $adminCateg->verifyActionForm();
     $adminCateg->openDivAdminCat();
     $db = new MIconRffDB();
     $db->verifyActionForm();

@@ -1,14 +1,16 @@
 <?php
 
+include_once(MICON_RFF_DIR_INC.'micon_rff_class_db_categ.php');
+
 class MIconRffDB{
-    private $tableCat;
+    private $dbCat;
     private $tableItens;
     private $db;
     function __construct(){
         global $wpdb;
-        $this->tableCat = $wpdb->prefix.MICON_RFF_TABLE_CATEG;
         $this->tableItens = $wpdb->prefix.MICON_RFF_TABLE_ITEMS;
         $this->db = $wpdb;
+        $this->dbCat = new MIconRffDbCat();
     }
     function getFather($item, $array){
         $tableItensMIconRff = $this->tableItens;
@@ -251,14 +253,11 @@ class MIconRffDB{
  */
 
     function getAllCategoryForSelectTag(){
-        $all_categ = $this->db->get_results("SELECT * FROM {$this->tableCat}", ARRAY_A);
-        return $all_categ;
+        return $this->dbCat->getAllCategoryArray();
     }
 
     function getCatById($id){
-        $id = sanitize_text_field($id);
-        $cat = $this->db->get_results("SELECT * FROM {$this->tableCat} WHERE id={$id}");
-        return $cat[0];
+        return $this->dbCat->getCatById($id);
     }
 
 }

@@ -1,11 +1,14 @@
 <?php
 
 include_once(MICON_RFF_DIR_INC.'micon_rff_class_db.php');
+include_once(MICON_RFF_DIR_INC.'micon_rff_class_db_categ.php');
 
 class MIconAdminGET{
     private $db;
+    private $dbCat;
     function __construct(){
         $this->db = new MIconRffDB();
+        $this->dbCat = new MIconRffDbCat();
     }
     function verifyGet(){
         if(isset($_GET['id'])){
@@ -21,7 +24,7 @@ class MIconAdminGET{
                 "parentId":'.$itemForId->parentId.'
             }';
             echo '<div style="display:none;" id="contentMenuForId">'.$jsonItemForId.'</div>';
-            $cat = $this->db->getCatById($itemForId->category);
+            $cat = $this->dbCat->getCatById($itemForId->category);
             $jsonCat = '{
                 "id": '.$cat->id.',
                 "title": "'.$cat->title.'",
@@ -46,7 +49,7 @@ class MIconAdminGET{
             // echo 'ID selecionado: '.$_GET['id'];
         }
         if(isset($_GET['idCat'])){
-            $cat = $this->db->getCatById($_GET['idCat']);
+            $cat = $this->dbCat->getCatById($_GET['idCat']);
             $jsonCat = '{
                 "id": '.$cat->id.',
                 "title": "'.$cat->title.'",

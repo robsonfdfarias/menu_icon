@@ -239,6 +239,12 @@ class MIconRffDB{
         }
     }
 
+    function verifyActionForm(){
+        $this->insertIconRff();
+        $this->updateIconRff();
+        $this->deleteIconRff();
+    }
+
 
 /**
  * Aqui começa as categorias-----------------------------------------------

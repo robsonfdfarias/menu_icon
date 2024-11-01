@@ -136,10 +136,29 @@ function addParamsUrl(param, value){
     window.history.replaceState({}, '', url);
 }
 
+function findParam(param){
+    let url = new URL(window.location.href);
+    return url.searchParams.has(param);
+}
+if(findParam('adminCat')){
+    document.getElementById('divGeralAdminCat').style.display='block';
+}
+
+function getParams(){
+    let params = [];
+    let url = new URL(window.location.href);
+    url.searchParams.forEach((value, key) => {
+        params[key] = value;
+    });
+    return params.join('&');
+}
+
 
 function closeDivAdminCateg(){
+    removeParamsUrl('adminCat');
     document.getElementById('divGeralAdminCat').style.display = 'none';
 }
+
 
 
 /**
@@ -158,5 +177,33 @@ document.getElementById('formRffCatAdmin').addEventListener('submit', function(e
 });
 
 function closeDivFormAdminCat(){
+    removeParamsUrl('idCat');
     document.getElementById('divFormRffCatAdmin').style.display = 'none';
 }
+
+function newCategory(){
+    document.getElementById('divFormRffCatAdmin').style.display='block';
+}
+
+function openEditCateg(){
+    if(findParam('idCat')){
+        let title = document.getElementById('micon_rff_admin_cat_title');
+        let status = document.getElementById('micon_rff_admin_cat_status');
+        let divJson = document.getElementById('catForID').innerHTML;
+        let json='';
+        try{
+            json = JSON.parse(divJson);
+            // console.log(json)
+        }catch(error){
+            console.log('Ocorreu o seguinte erro: '+error);
+        }
+        title.value = json.title;
+        let option = document.createElement('option');
+        option.value = json.statusItem;
+        option.textContent = 'Atual -> '+json.statusItem;
+        option.selected=true;
+        status.append(option);
+        document.getElementById('divFormRffCatAdmin').style.display='block';
+    }
+}
+openEditCateg();

@@ -18,6 +18,9 @@ if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_class_db.php')){
 if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_class_admin_categ.php')){
     require_once(plugin_dir_path(__FILE__).'inc/micon_rff_class_admin_categ.php');
 }
+if(file_exists(plugin_dir_path(__FILE__).'inc/micon_rff_class_admin_get.php')){
+    require_once(plugin_dir_path(__FILE__).'inc/micon_rff_class_admin_get.php');
+}
 
 
 add_action('admin_menu', 'micon_rff_admin_menu');
@@ -37,46 +40,9 @@ function micon_rff_admin_page() {
     $adminCateg = new MIconRffCateg();
     $adminCateg->openDivAdminCat();
     $db = new MIconRffDB();
-    $db->insertIconRff();
-    $db->updateIconRff();
-    $db->deleteIconRff();
-    if(isset($_GET['id'])){
-        $itemForId = $db->getItemForId($_GET['id'])[0];
-        $jsonItemForId = '{
-            "id":'.$itemForId->id.',
-            "title": "'.$itemForId->title.'",
-            "urlPage": "'.$itemForId->urlPage.'",
-            "category":'.$itemForId->category.',
-            "statusItem": "'.$itemForId->statusItem.'",
-            "iconClass": "'.$itemForId->iconClass.'",
-            "orderItems":'.$itemForId->orderItems.',
-            "parentId":'.$itemForId->parentId.'
-        }';
-        echo '<div style="display:none;" id="contentMenuForId">'.$jsonItemForId.'</div>';
-        $cat = $db->getCatById($itemForId->category);
-        $jsonCat = '{
-            "id": '.$cat->id.',
-            "title": "'.$cat->title.'",
-            "statusItem": "'.$cat->statusItem.'"
-        }';
-        echo '<div style="display:none;" id="contentCatForId">'.$jsonCat.'</div>';
-        $jsonParentId='{"title":"Nenhum"}';
-        if(!empty($itemForId->parentId)){
-            $parentId = $db->getItemForId($itemForId->parentId)[0];
-            $jsonParentId = '{
-                "id": '.$parentId->id.',
-                "title": "'.$parentId->title.'",
-                "urlPage": "'.$parentId->urlPage.'",
-                "category": '.$parentId->category.',
-                "statusItem": "'.$parentId->statusItem.'",
-                "iconClass": "'.$parentId->iconClass.'",
-                "orderItems": '.$parentId->orderItems.',
-                "parentId": '.$parentId->parentId.'
-            }';
-        }
-        echo '<div style="display:none;" id="contentParentIdForId">'.$jsonParentId.'</div>';
-        // echo 'ID selecionado: '.$_GET['id'];
-    }
+    $db->verifyActionForm();
+    $adminGET = new MIconAdminGET();
+    $adminGET->verifyGet();
     ?>
     <div id="iconsRff" style="position: absolute; background-color:#fff; padding:10px; z-index:1000; display:none;">
             <div id="btCloseRffIcons" onclick="closeDivIcons()">X</div><br><br><br><br>
@@ -169,7 +135,8 @@ function micon_rff_admin_page() {
             }
             function adminCateg(){
                 addParamsUrl('adminCat', true);
-                document.getElementById('divGeralAdminCat').style.display='block';
+                window.location.reload();
+                // document.getElementById('divGeralAdminCat').style.display='block';
             }
         </script>
     </div>

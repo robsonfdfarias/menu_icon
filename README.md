@@ -51,26 +51,7 @@
   <li>Canais do Youtube: 
   </li>
     <ul>
-      <li>@robsonfdfarias: <a href="https://www.youtube.com/@RobsonFarias-os2di">RffEditor</a></li>
-      <li>@informaticacomrobsonfarias: <a href="https://www.youtube.com/c/Inform%C3%A1ticacomRobsonFarias">RffEditor</a></li>
+      <li>@robsonfdfarias: <a href="https://www.youtube.com/@RobsonFarias-os2di">Robson Farias (< code >_)</></a></li>
+      <li>@informaticacomrobsonfarias: <a href="https://www.youtube.com/c/Inform%C3%A1ticacomRobsonFarias">Canal do youtube</a></li>
     </ul>
 </ul><br>
-
-|               |
-|--------------------------------------|
-|
-▒▒▒▒▒▒▒▒▒▄▄▄▄▒▒▒▒▒▒▒
-▒▒▒▒▒▒▄▀▀▓▓▓▀█▒▒▒▒▒▒
-▒▒▒▒▄▀▓▓▄██████▄▒▒▒▒
-▒▒▒▄█▄█▀░░▄░▄░█▀▒▒▒▒
-▒▒▄▀░██▄░░▀░▀░▀▄▒▒▒▒
-▒▒▀▄░░▀░▄█▄▄░░▄█▄▒▒▒
-▒▒▒▒▀█▄▄░░▀▀▀█▀▒▒▒▒▒
-▒▒▒▄▀▓▓▓▀██▀▀█▄▀▀▄▒▒
-▒▒█▓▓▄▀▀▀▄█▄▓▓▀█░█▒▒
-▒▒▀▄█░░░░░█▀▀▄▄▀█▒▒▒
-▒▒▒▄▀▀▄▄▄██▄▄█▀▓▓█▒▒
-▒▒█▀▓█████████▓▓▓█▒▒
-▒▒█▓▓██▀▀▀▒▒▒▀▄▄█▀▒▒
-▒▒▒▀▀▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-|

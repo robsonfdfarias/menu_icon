@@ -1,0 +1,36 @@
+Plugin Name: Menu icon RFF
+Plugin URI: https://github.com/robsonfdfarias/menu_icon
+Description: Plugin para criação de um menu com icones com vários níveis para o Wordpress.
+Version: 3.0
+Author: Robson Ferreira de Farias
+Author URI: https://github.com/robsonfdfarias?tab=repositories
+License: GPL v2 ou posterior
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+=======================================================================
+
+Este plugin é licenciado sob a Licença GPL v2 ou posterior.
+
+O WordPress é um software livre; você pode redistribuí-lo e/ou modificá-lo
+sob os termos da Licença Pública Geral GNU, conforme publicada pela Free
+Software Foundation; seja a versão 2 da Licença, ou (a seu critério) qualquer
+versão posterior.
+
+Este plugin é distribuído na esperança de que seja útil, mas SEM NENHUMA GARANTIA;
+sem mesmo a garantia implícita de COMERCIALIZAÇÃO ou ADEQUAÇÃO A UM FIM
+ESPECÍFICO. Veja a Licença Pública Geral GNU para mais detalhes.
+
+Você deve ter recebido uma cópia da Licença Pública Geral GNU junto
+com este plugin; se não, escreva para a Free Software Foundation,
+Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, EUA.
+
+=======================================================================
+Os ícones foram tirados do dashicons. Segue a licença.
+=======================================================================
+Dashicons is the official icon font of the WordPress admin as of 3.8.
+
+The Dashicons project is no longer accepting icon requests. Here’s why: Next steps for Dashicons.
+
+For any issues that appear within WordPress core, please create a new ticket on trac. Use the “administration” component and the “UI” focus when creating the new ticket, and be sure to include “Dashicons” somewhere in the text of the ticket.
+
+Dashicons is licensed under GPLv2, or any later version with font exception.

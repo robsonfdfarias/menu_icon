@@ -14,27 +14,32 @@ function btSelectIconRff(){
 function closeDivIcons(){
     document.getElementById('iconsRff').style.display='none';
 }
+let formRffIconsMenu = document.getElementById('formRffIconsMenu');
+if(formRffIconsMenu){
+    formRffIconsMenu.addEventListener('submit', function(event){
+        console.log(event)
+        console.log(event.submitter.name)
+        if(document.getElementById('fieldIconRff').value==''){
+            alert('O campo Ícone é obrigatório, selecione um ícone clicando no botão Selecionar.')
+            event.preventDefault();
+        }
+        if(event.submitter.name=="openDelMenuRff"){
+            document.getElementById('divDelItemRff').style.display = 'block';
+            console.log('Bloqueou com sucesso....')
+            event.preventDefault();
+        }
+        if(event.submitter.name=="abortDeleteMenuRff"){
+            document.getElementById('divDelItemRff').style.display = 'none';
+            event.preventDefault();
+        }
+        removeParamsUrl('id')
+    });
+}
 
-document.getElementById('formRffIconsMenu').addEventListener('submit', function(event){
-    console.log(event)
-    console.log(event.submitter.name)
-    if(document.getElementById('fieldIconRff').value==''){
-        alert('O campo Ícone é obrigatório, selecione um ícone clicando no botão Selecionar.')
-        event.preventDefault();
-    }
-    if(event.submitter.name=="openDelMenuRff"){
-        document.getElementById('divDelItemRff').style.display = 'block';
-        console.log('Bloqueou com sucesso....')
-        event.preventDefault();
-    }
-    if(event.submitter.name=="abortDeleteMenuRff"){
-        document.getElementById('divDelItemRff').style.display = 'none';
-        event.preventDefault();
-    }
-    removeParamsUrl('id')
-});
+if(document.getElementById('formRffIconsMenu')){
+    ifIdSelectedOpenEdit();
+}
 
-ifIdSelectedOpenEdit();
 
 function ifIdSelectedOpenEdit(){
     let btCreate = document.getElementById('insertMenuRff');
@@ -165,25 +170,27 @@ function closeDivAdminCateg(){
  * Aqui começa a administração da Categoria
  */
 
-
-document.getElementById('formRffCatAdmin').addEventListener('submit', function(event){
-    console.log(event)
-    console.log(event.submitter.name)
-    if(event.submitter.name=="btCancelAdminCat"){
-        document.getElementById('divFormRffCatAdmin').style.display = 'none';
-        event.preventDefault();
-    }
-    if(event.submitter.name=="abortDeleteCatRff"){
-        document.getElementById('divDelCatRff').style.display = 'none';
-        event.preventDefault();
-    }
-    if(event.submitter.name=="btOpenDelAdminCat"){
-        document.getElementById('divDelCatRff').style.display = 'block';
-        event.preventDefault();
-    }
-    removeParamsUrl('id')
-    removeParamsUrl('idCat')
-});
+let formRffCatAdmin = document.getElementById('formRffCatAdmin');
+if(formRffCatAdmin){
+    formRffCatAdmin.addEventListener('submit', function(event){
+        console.log(event)
+        console.log(event.submitter.name)
+        if(event.submitter.name=="btCancelAdminCat"){
+            document.getElementById('divFormRffCatAdmin').style.display = 'none';
+            event.preventDefault();
+        }
+        if(event.submitter.name=="abortDeleteCatRff"){
+            document.getElementById('divDelCatRff').style.display = 'none';
+            event.preventDefault();
+        }
+        if(event.submitter.name=="btOpenDelAdminCat"){
+            document.getElementById('divDelCatRff').style.display = 'block';
+            event.preventDefault();
+        }
+        removeParamsUrl('id')
+        removeParamsUrl('idCat')
+    });
+}
 
 function clearFormCat(){
     document.getElementById('micon_rff_admin_cat_title').value='';

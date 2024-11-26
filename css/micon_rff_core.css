@@ -3,32 +3,52 @@
 }
 
 .miconsRffUlLiAll a {
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     font-weight: bold;
-}
-
-.n {
-    display: inline-flex;
-    list-style-type: none; /* Remove a numeração */
-    padding-left: 0; /* Remove o recuo padrão, se necessário */
-}
-.n li{
-    position: relative;
-    min-width: 150px;
-    padding: 5px 10px;
-    background-color: aquamarine;
-    /* margin-right: 5px; */
-    margin: 0;
-    border-bottom: 1px solid #cdcdcd;
-}
-.n li:hover{
-    background-color: rgb(114, 136, 129);
-}
-.n li a{
     text-decoration: none;
 }
-.n li .nn{
+
+.miconsRffUlLiAll li a:hover{
+    color: rgb(0, 0, 0);
+    transition: all ease-in-out 0.1s;
+}
+
+.miconsRffUlLiAll{
+    padding-left: 0; /* Remove o recuo padrão, se necessário */
     display: none;
+    position: absolute;
+}
+
+.miconsRffUlLiAll li{
+    background-color: #0c582c;
+    color: white;
+    padding: 10px 15px;
+    list-style-type: none; /* Remove a numeração */
+    min-width: fit-content; /* Largura mínima do submenu */
+    min-width: 150px;
+    list-style: none;
+    position: relative;
+    margin: 0;
+    margin-right: 5px;
+    transition: all ease-in-out 0.1s;
+}
+
+.miconsRffUlLiAll li:hover{
+    background-color: #b1cd49;
+    color: black;
+    transition: all ease-in-out 0.1s;
+}
+
+
+/*************** NÍVEL 1 *******************/
+.n {
+    display: inline-flex;
+    position: relative;
+}
+.n li{
+    margin: 0;
+    border-bottom: 1px solid #cdcdcd;
+    transition: all ease-in-out 0.1s;
 }
 .n li:hover .nn{
     display: block;
@@ -36,106 +56,64 @@
 
 
 
-
+/*************** NÍVEL 2 *******************/
 .nn {
-    position: absolute;
     top: 100%; /* Aparece logo abaixo do menu pai */
     left: 0;
-    /* background-color: #333; */
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    min-width: fit-content; /* Largura mínima do submenu */
-    list-style-type: none; /* Remove a numeração */
-    padding-left: 0; /* Remove o recuo padrão, se necessário */
 }
-.nn li{
-    position: relative;
-    min-width: 150px;
-    /* padding: 5px 10px; */
-    background-color: aquamarine;
-    margin-right: 5px;
-}
-.nn li:hover {
-    background-color: rgb(114, 136, 129);
-}
-.nn li a{
-    text-decoration: none;
-}
-/* .nn li .nnnn{
-    display: none;
-} */
-.nn li:hover .nnnn{
+.nn li:hover .nnn{
     display: block;
 }
 
 
+/*************** NÍVEL 3 *******************/
+.nnn {
+    top: 0; /* Aparece logo abaixo do menu pai */
+    left: 100%;
+}
+.nnn li:hover .nnnn{
+    display: block;
+}
+
+
+
+/*************** NÍVEL 4 *******************/
 .nnnn {
-    display: none;
-    position: absolute;
     top: 0; /* Aparece logo abaixo do menu pai */
     left: 100%;
-    min-width: 150px;
-    /* background-color: #333; */
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    min-width: fit-content; /* Largura mínima do submenu */
-    list-style-type: none; /* Remove a numeração */
-    padding-left: 0; /* Remove o recuo padrão, se necessário */
 }
-.nnnn li{
-    position: relative;
-    width: fit-content;
-    /* padding: 5px 10px; */
-    background-color: aquamarine;
-    margin-right: 5px;
-}
-.nnnn li:hover {
-    background-color: rgb(114, 136, 129);
-}
-.nnnn li a{
-    text-decoration: none;
-}
-.nnnn li .nnnnnnnn{
-    display: none;
-}
-.nnnn li:hover .nnnnnnnn{
+.nnnn li:hover .nnnnn{
     display: block;
 }
 
 
 
-.nnnnnnnn {
-    display: none;
-    position: absolute;
+/*************** NÍVEL 5 *******************/
+.nnnnn {
     top: 0; /* Aparece logo abaixo do menu pai */
     left: 100%;
-    min-width: 150px;
-    /* background-color: #333; */
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    min-width: fit-content; /* Largura mínima do submenu */
-    list-style-type: none; /* Remove a numeração */
-    padding-left: 0; /* Remove o recuo padrão, se necessário */
 }
-.nnnnnnnn li{
-    position: relative;
-    width: fit-content;
-    /* padding: 5px 10px; */
-    background-color: aquamarine;
-    margin-right: 5px;
+.nnnnn li:hover .nnnnnn{
+    display: block;
 }
-.nnnnnnnn li:hover {
-    background-color: rgb(114, 136, 129);
+
+
+
+/*************** NÍVEL 6 *******************/
+.nnnnnn {
+    top: 0; /* Aparece logo abaixo do menu pai */
+    left: 100%;
 }
-.nnnnnnnn li a{
-    text-decoration: none;
-}
-.nnnnnnnn li .nnnnnnnnnnnnnnnn{
+.nnnnnn li .nnnnnnn{
     display: none;
 }
+.nnnnnn li:hover .nnnnnnn{
+    display: block;
+}
+
+
+
+
 
 
 

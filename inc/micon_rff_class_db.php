@@ -129,6 +129,10 @@ class MIconRffDB{
 
     function printMenu2($items, $class) {
         // echo '<li>';
+        $cl = '';
+        for($i=0;$i<$class;$i++){
+            $cl .= 'n';
+        }
         $val = '';
         foreach ($items as $item) {
             // Imprime o título do item
@@ -136,9 +140,10 @@ class MIconRffDB{
                 $val .= '<li><span class="'.$item->iconClass.'" style="font-size: 20px; padding-right: 5px;"></span><a href="'.$item->urlPage.'">' . htmlspecialchars($item->title).'</a>';
                 // Verifica se há filhos e chama a função recursivamente
                 if (!empty($item->children)) {
-                    $val .= '<ul class="miconsRffUlLiAll '.$class.$class.'">';
+                    // $val .= '<ul class="miconsRffUlLiAll '.$class.$class.'">';
+                    $val .= '<ul class="'.$cl.' miconsRffUlLiAll">';
                     for($r=0;$r<count($item->children); $r++){
-                        $val .= $this->printMenu2($item->children[$r], $class.$class);
+                        $val .= $this->printMenu2($item->children[$r], $class+1);
                     }
                     $val .= '</ul>';
                 }
@@ -152,8 +157,9 @@ class MIconRffDB{
     function getAllItemsArray($idCat){
         $val = '';
         $item_map=$this->generateArrayAllItems(' WHERE category='.$idCat);
-        $val .= '<ul class="miconsRffUlLiAll n">';
-        $val .= $this->printMenu2($item_map, 'n');
+        $val .= '<ul class="n miconsRffUlLiAll">';
+        // $val .= $this->printMenu2($item_map, 'n');
+        $val .= $this->printMenu2($item_map, 2);
         $val .= '</ul>';
         return $val;
     }

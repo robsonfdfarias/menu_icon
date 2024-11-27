@@ -3,7 +3,7 @@
 Plugin Name: Menu Ícon RFF
 Plugin URI: https://github.com/robsonfdfarias/menu_icon
 Description: Plugin para adicionar um menu com 3 níveis.
-Version: 3.0
+Version: 3.1
 Author: Robson Ferreira de Farias
 Email: robsonfdfarias@gmail.com
 Author URI: http://infocomrobson.com.br/site

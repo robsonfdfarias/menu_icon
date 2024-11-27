@@ -42,6 +42,7 @@ if(file_exists(plugin_dir_path(__FILE__).'micon-rff-core.php')){
  // Adiciona o CSS e JS
  function micon_rff_adicionar_scripts() {
     wp_enqueue_style('micon-rff-modal-css', plugin_dir_url(__FILE__) . 'css/micon_rff_core.css');
+    wp_enqueue_style('micon-rff-admin-css', plugin_dir_url(__FILE__) . 'css/micon_rff_admin.css');
     wp_enqueue_script('micon-rff-modal-js', plugin_dir_url(__FILE__) . 'js/micon_rff_functions.js', array('jquery'), null, true);
 }
   

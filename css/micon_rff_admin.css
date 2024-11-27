@@ -1,0 +1,54 @@
+.micon_rff_div_menu{
+    width:fit-content;
+    background-color:#fff;
+    padding:20px;
+    border:1px solid #cdcdcd;
+    /* transform: matrix3d(0.866, 0.5, 0, 0, -0.5, 0.866, 0, 0, 0, 0, 1, 0, 100, 200, 300, 1); */
+    /* transform: scale3d(2, 6, 2); */
+}
+
+.micon_rff_div_menu ul li a{
+    text-decoration: none;
+    color: #067437;
+    transition: all ease-in-out 0.2s;
+}
+
+.micon_rff_div_menu ul li a:hover{
+    color: #04b453;
+    /* text-shadow: 0 0 2px #012210; */
+    transition: all ease-in-out 0.2s;
+}
+
+.micon_rff_div_menu{
+    transform-origin: bottom center;
+    opacity: 0;
+    transform: perspective(10px) rotateX(35deg);
+    animation: slideColor 0.5s ease-out 1 calc(var(--timesleep)*0.2) forwards;
+}
+
+@keyframes slideColor {
+    0% {
+        /* transform: perspective(10px) rotateX(15deg); */
+        transform: translateY(100px);
+    }
+    75% {
+        transform: translateY(-20px);
+        opacity: 1;
+    }
+    100% {
+        /* transform: perspective(0px) rotateX(0deg); */
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+.micon_rff_div_menu ul li div{
+    transition: all ease-in-out 0.2s;
+}
+
+.micon_rff_div_menu ul li div:hover{
+    transform: scale(1.1); /* Aumenta o texto em 2 vezes */
+    transform: perspective(50px) rotateX(15deg);
+    transform-origin: bottom left; /* Aumenta a partir do canto inferior esquerdo */
+    transition: all ease-in-out 0.2s;
+}

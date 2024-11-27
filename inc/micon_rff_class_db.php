@@ -53,8 +53,8 @@ class MIconRffDB{
         foreach ($items as $item) {
             // Imprime o título do item
             if(!empty($item->title)){
-                echo '<li>'.$m.' <span class="'.$item->iconClass.'" style="font-size: 17px; padding-right: 5px;" title="'.$item->title
-                .'"></span> <a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a>';
+                echo '<li><div>'.$m.' <span class="'.$item->iconClass.'" style="font-size: 17px; padding-right: 5px;" title="'.$item->title
+                .'"></span> <a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a></div>';
                 // Verifica se há filhos e chama a função recursivamente
                         $marc++;
                 if (!empty($item->children)) {
@@ -72,25 +72,29 @@ class MIconRffDB{
         echo '</ul>';
     }
     function getAllItemsArrayAdminPage(){
-        $item_map=$this->generateArrayAllItems('');
+        $item_map=$this->generateArrayAllItems(' ORDER BY category ASC');
         echo '<div style="display:flex;flex-wrap:wrap;justify-content:left; gap:10px;">';
+        $timeSleep = 0;
         foreach($item_map as $item){
             if(!empty($item->title)){
-                echo '<div style="width:fit-content; background-color:#fff; padding:20px; border:1px solid #cdcdcd;">';
+                $timeSleep += 1;
+                $cat = $this->dbCat->getCatById($item->category);
+                echo '<div class="micon_rff_div_menu" style="--timesleep:'.$timeSleep.'s">';
                     echo '<span style="font-size:1.5rem;">'.htmlspecialchars($item->title).'</span>';
+                    echo '<br>Categoria: <strong>'.$cat->title.'</strong><br>';
                     echo '<ul>';
-                        echo '<li>- <span class="'.$item->iconClass.'" style="font-size: 17px; padding-right: 5px;" title="'.$item->title.'"></span><a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a>';
-                        if (!empty($item->children)) {
-                            echo '<ul>';
-                            for($r=0;$r<count($item->children); $r++){
-                                echo '<li>';
-                                $this->printMenu($item->children[$r], '', 2);
-                                echo '</li>';
-                            }
-                            echo '</ul>';
+                    echo '<li><div>- <span class="'.$item->iconClass.'" style="font-size: 17px; padding-right: 5px;" title="'.$item->title.'"></span><a href="?page=Menu-icon-rff&id='.$item->id.'">' . htmlspecialchars($item->title).'</a></div>';
+                    if (!empty($item->children)) {
+                        echo '<ul>';
+                        for($r=0;$r<count($item->children); $r++){
+                            echo '<li>';
+                            $this->printMenu($item->children[$r], '', 2);
+                            echo '</li>';
                         }
-                        echo '</li>';
-                        echo '</li>';
+                        echo '</ul>';
+                    }
+                    echo '</li>';
+                    echo '</li>';
                     echo '</ul>';
                 echo '</div>';
             }

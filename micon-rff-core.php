@@ -146,9 +146,7 @@ function micon_rff_admin_page() {
 
 function gmp_list_menu_icon_rff_options($db) {
     $listMenu = $db->getAllItemsForSelectTag();
-    foreach($listMenu as $menu){
-        echo '<option value="' . esc_attr($menu['id']) . '">' . esc_html($menu['title']) . '</option>';
-    }
+    echo $listMenu;
 }
 function getAllCatgsInOptions($db) {
     $listCateg = $db->getAllCategoryForSelectTag();

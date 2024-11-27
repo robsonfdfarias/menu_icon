@@ -171,9 +171,42 @@ class MIconRffDB{
         return 'Olá.......';
     }
 
+
+
+
+
+    function printMenuOption($items, $marc) {
+        $m = '';
+        for($i=0;$i<$marc;$i++){
+            $m .= '-';
+        }
+        $val = '';
+        foreach ($items as $item) {
+            if(!empty($item->title)){
+                $val .= '<option value="'.$item->id.'">'.$m.$item->title.'</option>';
+                // Verifica se há filhos e chama a função recursivamente
+                if (!empty($item->children)) {
+                    for($r=0;$r<count($item->children); $r++){
+                        $val .= $this->printMenuOption($item->children[$r], $marc+1);
+                    }
+                }
+            }
+        }
+        return $val;
+    }
+
     function getAllItemsForSelectTag(){
-        $all_items = $this->db->get_results("SELECT * FROM {$this->tableItens}", ARRAY_A);
-        return $all_items;
+        $all_items = $this->generateArrayAllItems(' ORDER BY category ASC');
+        $options = '';
+        foreach($all_items as $item){
+            $options .= '<option value="'.$item->id.'" style="background-color:black;color:white;">'.$item->title.'</option>';
+            if (!empty($item->children)) {
+                for($r=0;$r<count($item->children); $r++){
+                    $options .= $this->printMenuOption($item->children[$r], 1);
+                }
+            }
+        }
+        return $options;
     }
 
     function getItemForId($id){

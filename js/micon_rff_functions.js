@@ -111,6 +111,7 @@ function ifIdSelectedOpenEdit(){
         optionParent.value = json.parentId;
         optionParent.textContent = 'Atual -> '+jsonParentId.title;
         optionParent.selected = true;
+        preventsInsertionItself(parent, json.id);
         parent.appendChild(optionParent);
         // parent.value = json.parentId;
         let optionCat = document.createElement('option');
@@ -121,6 +122,13 @@ function ifIdSelectedOpenEdit(){
         // category.value = json.category;
     }else{
         // console.log('Não existe um id')
+    }
+}
+function preventsInsertionItself(select, opt){
+    for(let i=0;i<select.children.length;i++){
+        if(select.children[i].getAttribute('value')==opt){
+            select.children[i].remove();
+        }
     }
 }
 

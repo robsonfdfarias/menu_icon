@@ -141,7 +141,8 @@ class MIconRffDB{
         foreach ($items as $item) {
             // Imprime o título do item
             if(!empty($item->title)){
-                $val .= '<li><span class="'.$item->iconClass.'" style="font-size: 20px; padding-right: 5px;"></span><a href="'.$item->urlPage.'">' . htmlspecialchars($item->title).'</a>';
+                $url = $this->verifyIfPagOrURL($item->urlPage);
+                $val .= '<li><span class="'.$item->iconClass.'" style="font-size: 20px; padding-right: 5px;"></span><a href="'.$url.'">' . htmlspecialchars($item->title).'</a>';
                 // Verifica se há filhos e chama a função recursivamente
                 if (!empty($item->children)) {
                     // $val .= '<ul class="miconsRffUlLiAll '.$class.$class.'">';
@@ -156,6 +157,17 @@ class MIconRffDB{
         }
         return $val;
         // echo '</li>';
+    }
+
+    function verifyIfPagOrURL($id){
+        $url = $id;
+        if(ctype_digit($id)){
+            $page = get_post($id);
+            if($page){
+                $url = get_permalink($id);
+            }
+        }
+        return $url;
     }
 
     function getAllItemsArray($idCat){
@@ -327,7 +339,7 @@ class MIconRffDB{
 
     function render_teste() {
         $args = array(
-            'post_type' => 'pmjs_pagina', // Define o tipo de post como 'page'
+            'post_type' => array('pmjs_pagina', 'page', 'outros'), // Define o tipo de post como 'page'
             'post_status' => 'publish', // Apenas páginas publicadas
             'posts_per_page' => -1, // Sem limite de resultados
         );

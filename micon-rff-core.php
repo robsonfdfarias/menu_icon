@@ -71,8 +71,10 @@ function micon_rff_admin_page() {
                     <input type="text" id="menu_icon_rff_title" name="menu_icon_rff_title" style="width:100%;" required>
                 </p>
                 <p>
-                    <label for="menu_icon_rff_url">URL:</label>
-                    <input type="text" id="menu_icon_rff_url" name="menu_icon_rff_url" style="width:100%;" required>
+                    <input type="checkbox" name="menu_icon_rff_check_page" id="menu_icon_rff_check_page" value="ok" className="">Selecionar página?<br>
+                    <!-- <label for="menu_icon_rff_url">URL:</label> -->
+                    <input type="text" id="menu_icon_rff_url" name="menu_icon_rff_url" style="width:100%; margin-top:5px;" placeholder="Digite o endereço aqui" required>
+                    <?php $db->render_teste(); ?>
                 </p>
                 <p><label for="menu_icon_rff_parent">Escolha o Pai: (Se deixar Nenhum, ele não será filho)</label>
                     <select id="menu_icon_rff_parent" name="menu_icon_rff_parent" style="width:100%;">

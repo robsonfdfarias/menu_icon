@@ -325,6 +325,32 @@ class MIconRffDB{
         $this->deleteIconRff();
     }
 
+    function render_teste() {
+        $args = array(
+            'post_type' => 'pmjs_pagina', // Define o tipo de post como 'page'
+            'post_status' => 'publish', // Apenas páginas publicadas
+            'posts_per_page' => -1, // Sem limite de resultados
+        );
+        
+        $query = new WP_Query($args);
+        $pages = $query->posts; // Retorna as páginas como um array de objetos WP_Post
+        ?>
+            <!-- <div id="micon-rff-pagina-field" class="localizacao-container" style="display:none;">
+            <label for="micon-rff-pagina-input"> -->
+            <?php //esc_html_e('Localização', 'pmjs-menus'); ?>
+            <!-- </label> -->
+            <select id="micon-rff-pagina-input" name="micon-rff-pagina-input" style="display:none;">
+        <?php
+            echo '<option value="0" disabled selected>Selecione uma opção</option>';
+            foreach ($pages as $page) {
+                echo '<option value="' . esc_attr($page->ID) . '">' . esc_html($page->post_title) . '</option>';
+            }
+        ?>
+            </select>
+            <!-- </div> -->
+        <?php
+    }
+
 
 /**
  * Aqui começa as categorias-----------------------------------------------

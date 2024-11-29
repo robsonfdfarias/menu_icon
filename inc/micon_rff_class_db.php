@@ -12,16 +12,16 @@ class MIconRffDB{
         $this->db = $wpdb;
         $this->dbCat = new MIconRffDbCat();
     }
-    function getFather($item, $array){
+    function getChild($item, $array){
         $tableItensMIconRff = $this->tableItens;
-        global $wpdb;
-        $re = $wpdb->get_results("SELECT * FROM {$tableItensMIconRff} WHERE parentId={$item->id}");
+        // global $wpdb; //modifiquei o $wpdb->get_results por $this->db->get_results
+        $re = $this->db->get_results("SELECT * FROM {$tableItensMIconRff} WHERE parentId={$item->id}");
         for($i=0;$i<count($re); $i++){
             // echo $re[$i]->title;
             // echo '<br><br>';
             $newAr = [];
             $newAr[$i] = $re[$i];
-            $newAr[$i]->children = $this->getFather($re[$i], []);
+            $newAr[$i]->children = $this->getChild($re[$i], []);
             $array[$i] = $newAr;
         }
         return $array;
@@ -31,14 +31,14 @@ class MIconRffDB{
         $all_items = $this->db->get_results("SELECT * FROM {$this->tableItens}$where");
 
         $ar = [];
-        $unique_items = [];
+        // $unique_items = [];
         $item_map = [];
 
         foreach ($all_items as $item) {
             // Pega apenas os itens pais
             if($item->parentId==null || $item->parentId==0){
                 $item_map[$item->id] = $item;
-                $item_map[$item->id]->children = $this->getFather($item, []); // pega os itens filhos
+                $item_map[$item->id]->children = $this->getChild($item, []); // pega os itens filhos
             }
         }
         // echo '<pre>'.print_r($item_map, true).'</pre>';

@@ -52,3 +52,29 @@
     transform-origin: bottom left; /* Aumenta a partir do canto inferior esquerdo */
     transition: all ease-in-out 0.2s;
 }
+
+
+
+
+
+
+#btCloseRffIcons {
+    padding: 5px 10px;
+    background-color: red;
+    color: white;
+    width: fit-content;
+    cursor: pointer;
+    float: right;
+    border-radius: 4px;
+    transition: all ease-in-out 0.3s;
+}
+
+#btCloseRffIcons:hover{
+    background-color: rgb(250, 93, 93);
+    color: black;
+    transition: all ease-in-out 0.3s;
+}
+
+#tableAdminCategRff tr td{
+    padding: 10px;
+}

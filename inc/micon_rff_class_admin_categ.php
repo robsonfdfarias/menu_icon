@@ -7,7 +7,7 @@ class MIconRffCateg{
         $this->dbCat = new MIconRffDbCat();
     }
     function openDivAdminCat(){
-        echo '<div id="divGeralAdminCat" style="position:absolute;top:0;left:-20px;width:100%;height:100%;background-color:#f0f0f1;display:none;">
+        echo '<div id="divGeralAdminCat" style="position:absolute;top:0;left:-20px;width:100%;height:100%;background-color:#f0f0f1;display:none;z-index:10001;">
             <div onclick="closeDivAdminCateg()" title="Voltar para os itens de menu" style="position:absolute;right:35px;top:40px;padding:10px 15px;cursor:pointer;background-color:red;font-size:1.3rem;border-radius:3px;color:white;box-shadow:2px 2px 2px rgba(0,0,0,0.5);z-index:3;">X</div>
             <div style="width:calc(100% - 80px);height:calc(100% - 80px);margin:20px;background-color:#fff; padding:20px;position:relative;">';
             echo '<button onclick="newCategory()">Nova Categoria</button>';
